@@ -1,0 +1,9 @@
+# Ignore artifacts:
+/.cache
+/.github
+/.husky
+/build
+/public
+/node_modules
+/dist
+/app/styles/tailwind.css

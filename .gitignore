@@ -1,0 +1,9 @@
+.cache
+.database
+.wrangler
+.DS_Store
+.env
+.dev.*
+*.log
+build
+node_modules

@@ -1,0 +1,4 @@
+[[hyperdrive]]
+binding = "TEST_DB"
+id = "3370113c7eee6a61c7231ad2362079dd"
+localConnectionString = "postgres://postgres:postgres123@localhost:5432/kinstree"
