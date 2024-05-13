@@ -4,24 +4,24 @@ import {
 	ThemeProvider,
 	useTheme,
 } from 'remix-themes';
-import { LoaderFunctionArgs } from '@remix-run/cloudflare';
 import {
 	Links,
-	LiveReload,
 	Meta,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/node';
 import { GlobalPendingIndicator } from './components/global-pending-indicator';
 import { getThemeSessionResolver } from './lib/sessions.server';
 import './globals.css';
 
 // Return the theme from the session storage using the loader
 export async function loader({ context, request }: LoaderFunctionArgs) {
-	const themeSessionResolver = getThemeSessionResolver(context.env);
+	const themeSessionResolver = getThemeSessionResolver();
 	const { getTheme } = await themeSessionResolver(request);
+
 	return {
 		theme: getTheme(),
 	};
@@ -55,7 +55,6 @@ export function App() {
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
-				<LiveReload />
 			</body>
 		</html>
 	);

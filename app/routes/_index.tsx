@@ -1,3 +1,4 @@
-import { redirect } from "@remix-run/node";
+// @/app/routes/_index.tsx
+import { redirect } from '@remix-run/node';
 
-export const loader = () => redirect("/members");
+export const loader = () => redirect('/members');

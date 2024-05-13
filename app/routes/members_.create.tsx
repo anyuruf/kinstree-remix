@@ -5,10 +5,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { initializeDb } from '@/db.server/config.server';
 import { createMember } from '@/db.server/members.server';
-import { ActionFunctionArgs } from '@remix-run/node';
-import { redirect } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import { ValidatedForm, validationError } from 'remix-validated-form';
+import { ActionFunctionArgs, redirect } from '@remix-run/node';
 import { z } from 'zod';
 
 const genderEnum = ['male', 'female'] as const;
@@ -42,7 +41,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 
-	const db = initializeDb(context.connectionString);
+	const db = initializeDb(process.env.DATABASE_URL!);
 	const {
 		firstName,
 		lastName,

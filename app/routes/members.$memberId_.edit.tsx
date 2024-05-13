@@ -5,8 +5,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { initializeDb } from '@/db.server/config.server';
 import { editMember } from '@/db.server/members.server';
-import { LoaderFunctionArgs, json } from '@remix-run/cloudflare';
-import { ActionFunctionArgs } from '@remix-run/node';
 import { redirect, useRouteLoaderData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import {
@@ -14,6 +12,7 @@ import {
 	setFormDefaults,
 	validationError,
 } from 'remix-validated-form';
+import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';
 
@@ -67,7 +66,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 
-	const db = initializeDb(context.connectionString);
+	const db = initializeDb(process.env.DATABASE_URL!);
 
 	const {
 		id,

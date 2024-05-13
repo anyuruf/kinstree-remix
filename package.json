@@ -1,14 +1,13 @@
 {
-  "name": "shadcn",
-  "private": true,
+  "name": "kinstree",
+  "private": false,
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "dev": "dotenv -- node ./server.js",
+    "start": "cross-env NODE_ENV=production node ./server.js",
     "db:generate": "drizzle-kit generate:pg",
-    "lint": "biome check .",
-    "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -19,17 +18,19 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-radio-group": "^1.1.3",
     "@radix-ui/react-slot": "1.0.2",
-    "@remix-run/cloudflare": "^2.8.1",
-    "@remix-run/cloudflare-pages": "^2.8.1",
     "@remix-run/express": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "@remix-validated-form/with-zod": "^2.0.7",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
+    "compression": "1.7.4",
+    "cross-env": "7.0.3",
     "date-fns": "^3.6.0",
     "drizzle-orm": "0.29.3",
+    "express": "^4.19.2",
     "isbot": "5.1.0",
+    "morgan": "1.10.0",
     "nanoid": "^5.0.6",
     "react": "18.2.0",
     "react-day-picker": "^8.10.0",
@@ -40,7 +41,6 @@
     "tailwind-merge": "2.2.1",
     "tailwindcss-animate": "1.0.7",
     "tiny-invariant": "^1.3.3",
-    "uuid": "9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -60,10 +60,9 @@
     "typescript": "5.3.3",
     "vite": "^5.2.8",
     "vite-env-only": "2.2.0",
-    "vite-tsconfig-paths": "4.3.1",
-    "wrangler": "3.28.4"
+    "vite-tsconfig-paths": "4.3.1"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }
