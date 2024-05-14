@@ -28,9 +28,7 @@ export default function MembersPage() {
 							{members?.map(member => (
 								<li key={member.id}>
 									<NavLink
-										className={({ isActive }) =>
-											`block border-b p-4 text-xl ${isActive ? 'bg-white' : ''}`
-										}
+										className={({ isActive }) => `block border-b p-4 text-xl`}
 										to={`${member.id}`}
 									>
 										📝 {member.firstName}

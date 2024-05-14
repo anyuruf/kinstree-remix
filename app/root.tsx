@@ -14,12 +14,11 @@ import {
 } from '@remix-run/react';
 import { LoaderFunctionArgs } from '@remix-run/node';
 import { GlobalPendingIndicator } from './components/global-pending-indicator';
-import { getThemeSessionResolver } from './lib/sessions.server';
+import { themeSessionResolver } from './lib/sessions.server';
 import './globals.css';
 
 // Return the theme from the session storage using the loader
 export async function loader({ context, request }: LoaderFunctionArgs) {
-	const themeSessionResolver = getThemeSessionResolver();
 	const { getTheme } = await themeSessionResolver(request);
 
 	return {

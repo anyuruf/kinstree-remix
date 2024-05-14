@@ -1,8 +1,4 @@
 import { createThemeAction } from 'remix-themes';
-import { getThemeSessionResolver } from '../lib/sessions.server';
-import { ActionFunctionArgs } from '@remix-run/cloudflare';
+import { themeSessionResolver } from '../lib/sessions.server';
 
-export function action({ context }: ActionFunctionArgs) {
-	const themeSessionResolver = getThemeSessionResolver();
-	return createThemeAction(themeSessionResolver);
-}
+export const action = createThemeAction(themeSessionResolver);
