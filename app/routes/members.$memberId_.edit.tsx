@@ -62,7 +62,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	);
 };
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 

@@ -1,4 +1,10 @@
-import { InsertMember, PgDB, SelectMember, members } from '@/db.server/schema';
+import {
+	InsertMember,
+	PgDB,
+	SelectMember,
+	members,
+	parents,
+} from '@/db.server/schema';
 import { eq } from 'drizzle-orm/sql';
 
 export async function createMember(
@@ -67,4 +73,15 @@ export async function getMember(
 	return await db.query.members.findFirst({
 		where: eq(members.id, id),
 	});
+}
+
+export async function getChildren(
+	db: PgDB,
+	id: SelectMember['id'],
+): Promise<any> {
+	return await db
+		.select()
+		.from(parents)
+		.innerJoin(members, eq(parents.target, members.id))
+		.where(eq(parents.source, id));
 }

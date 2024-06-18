@@ -20,8 +20,12 @@ export const members = pgTable('members', {
 
 export const parents = pgTable('parents', {
 	id: varchar('id', { length: 21 }).default(nanoid()).primaryKey(),
-	source: varchar('source', { length: 21 }).notNull(),
-	target: varchar('target', { length: 21 }).notNull(),
+	source: varchar('source', { length: 21 })
+		.notNull()
+		.references(() => members.id),
+	target: varchar('target', { length: 21 })
+		.notNull()
+		.references(() => members.id),
 });
 
 const schema = {

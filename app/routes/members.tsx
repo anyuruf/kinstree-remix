@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { getMembers } from '@/db.server/members.server';
 import { initializeDb } from '@/db.server/config.server';
+import { cn } from '@/lib/styles';
 
 export async function loader() {
 	const db = initializeDb(process.env.DATABASE_URL!);
@@ -28,7 +29,11 @@ export default function MembersPage() {
 							{members?.map(member => (
 								<li key={member.id}>
 									<NavLink
-										className={({ isActive }) => `block border-b p-4 text-xl`}
+										className={({ isActive }) =>
+											cn(
+												`block border-b p-4 text-xl ${isActive ? 'bg-accent' : ''}`,
+											)
+										}
 										to={`${member.id}`}
 									>
 										📝 {member.firstName}
