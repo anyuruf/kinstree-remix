@@ -18,10 +18,10 @@ export default function MembersPage() {
 	const { members } = useLoaderData<typeof loader>();
 
 	return (
-		<div className="h-full min-h-screen w-full">
+		<div className="w-full max-h-screen">
 			<Header isAuthenticated={true} />
-			<main className="grid gap-2 md:grid-cols-12 h-full p-2 md:p-3">
-				<div className="h-full w-full md:col-span-9 border-r ">
+			<main className="grid gap-2 md:grid-cols-12 p-2 md:p-3 ">
+				<div className="w-full md:col-span-9 border-r ">
 					{members?.length === 0 ? (
 						<p className="p-4">No notes yet</p>
 					) : (
@@ -43,8 +43,10 @@ export default function MembersPage() {
 						</ol>
 					)}
 				</div>
-				<div className="h-full md:col-span-3">
-					<Outlet />
+				<div className="md:col-span-3">
+					<div className="overflow-y-scroll">
+						<Outlet />
+					</div>
 				</div>
 			</main>
 		</div>

@@ -1,25 +1,32 @@
-import {
-	InsertMember,
-	PgDB,
-	SelectMember,
-	members,
-	parents,
-} from '@/db.server/schema';
+import { PgDB, SelectMember, members, parents } from '@/db.server/schema';
 import { eq } from 'drizzle-orm/sql';
 
 export async function createMember(
 	db: PgDB,
-	{ avatarUrl, lastName, firstName, description }: InsertMember,
+	{
+		lastName,
+		firstName,
+		description,
+		gender,
+		kingdomClan,
+		birthDate,
+		deathDate,
+		avatarUrl,
+	}: any,
 ): Promise<SelectMember> {
 	return (
 		(
 			await db
 				.insert(members)
 				.values({
-					avatarUrl,
 					firstName,
 					lastName,
 					description,
+					gender,
+					kingdomClan,
+					birthDate,
+					deathDate,
+					avatarUrl,
 				})
 				.returning()
 		)[0] ?? null

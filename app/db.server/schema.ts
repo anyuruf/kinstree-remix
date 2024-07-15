@@ -6,7 +6,7 @@ import { InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 export const genderEnum = pgEnum('gender', ['male', 'female']);
 
 export const members = pgTable('members', {
-	id: varchar('id', { length: 21 }).default(nanoid()).primaryKey(),
+	id: varchar('id', { length: 21 }).$defaultFn(nanoid).primaryKey(),
 	firstName: varchar('firstName', { length: 48 }).notNull(),
 	lastName: varchar('lastName', { length: 48 }).notNull(),
 	kingdomClan: varchar('kingdomClan', { length: 96 }),

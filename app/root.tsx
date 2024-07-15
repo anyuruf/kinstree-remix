@@ -18,7 +18,7 @@ import { themeSessionResolver } from './lib/sessions.server';
 import './globals.css';
 
 // Return the theme from the session storage using the loader
-export async function loader({ context, request }: LoaderFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
 	const { getTheme } = await themeSessionResolver(request);
 
 	return {

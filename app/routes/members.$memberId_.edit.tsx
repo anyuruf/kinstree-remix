@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calender';
+import { Calendar } from '@/components/ui/calendar';
 import FormInput from '@/components/ui/form-input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { initializeDb } from '@/db.server/config.server';
-import { editMember } from '@/db.server/members.server';
-import { redirect, useRouteLoaderData } from '@remix-run/react';
+import { editMember, getMember } from '@/db.server/members.server';
+import { redirect, useNavigate, useRouteLoaderData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import {
 	ValidatedForm,
@@ -15,6 +15,7 @@ import {
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';
+import { MemberEdit } from '@/components/members/member-edit';
 
 const genderEnum = ['male', 'female'] as const;
 
@@ -49,8 +50,8 @@ export const validator = withZod(
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
 	invariant(params.memberId, 'Expected memberId param');
-
-	const member: unknown = useRouteLoaderData('routes/member/$memberId');
+	const db = initializeDb(process.env.DATABASE_URL!);
+	const member = await getMember(db, params.memberId);
 
 	if (!member) {
 		throw new Response('Not Found', { status: 404 });
@@ -68,52 +69,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 	const db = initializeDb(process.env.DATABASE_URL!);
 
-	const {
-		id,
-		firstName,
-		lastName,
-		avatarUrl,
-		kingdomClan,
-		gender,
-		nationality,
-		birthDate,
-		deathDate,
-		description,
-	} = data.data;
-
 	const editedMember = await editMember(db, {
-		id,
-		firstName,
-		lastName,
-		avatarUrl,
-		kingdomClan,
-		gender,
-		nationality,
-		birthDate,
-		deathDate,
-		description,
+		...data.data,
 	});
 
 	return redirect(`/members/${editedMember.id}`);
 };
 
 export default function EditMember() {
-	return (
-		<ValidatedForm id="editForm" validator={validator} method="post">
-			<FormInput name="id" label="id" type="hidden" />
-			<FormInput name="firstName" label="First Name" />
-			<FormInput name="lastName" label="Last Name" />
-			<FormInput name="kingdomClan" label="Kingdom-Clan" />
-			<FormInput name="nationality" label="Nationality" />
-			<FormInput name="avatarUrl" label="AvatarUrl" type="hidden" />
-			<RadioGroup name="gender" label="Gender">
-				<RadioGroupItem name="male" label="Male" />
-				<RadioGroupItem name="female" label="Female" />
-			</RadioGroup>
-			<Calendar name="birthDate" label="Birth date" />
-			<Calendar name="deathDate" label="Death date" />
-			<Textarea name="description" label="Description" />
-			<Button type="submit" />
-		</ValidatedForm>
-	);
+	return <MemberEdit validator={validator} />;
 }

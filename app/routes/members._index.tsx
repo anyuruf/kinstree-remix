@@ -4,7 +4,7 @@ export default function AppIndexPage() {
 	return (
 		<p>
 			No note selected. Select a note on the left -
-			<Link to="new" className="text-primary underline">
+			<Link to="create" className="text-primary underline">
 				Or Create a new member.
 			</Link>
 		</p>

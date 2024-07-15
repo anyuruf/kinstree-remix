@@ -1,4 +1,4 @@
-import { useLoaderData } from '@remix-run/react';
+import { Form, useLoaderData } from '@remix-run/react';
 import {
 	Card,
 	CardContent,
@@ -63,7 +63,9 @@ export function Member() {
 				</table>
 			</CardContent>
 			<CardFooter className="flex justify-around">
-				<Button size="lg">Edit</Button>
+				<Form action="edit">
+					<Button size="lg">Edit</Button>
+				</Form>
 				<DeleteModal />
 			</CardFooter>
 		</Card>
