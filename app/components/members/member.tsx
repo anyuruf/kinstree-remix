@@ -7,10 +7,10 @@ import {
 	CardTitle,
 } from '../ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { formatDate } from '@/lib/format.date';
 import { Button } from '../ui/button';
 import { loader } from '@/routes/members.$memberId';
 import { DeleteModal } from '../modal/delete-modal';
+import { format } from 'date-fns';
 
 export function Member() {
 	const { member } = useLoaderData<typeof loader>();
@@ -53,11 +53,19 @@ export function Member() {
 						</tr>
 						<tr>
 							<td className="text-muted-foreground">D.O.B</td>
-							<td>{formatDate(member.birthDate)}</td>
+							<td>
+								{member.birthDate
+									? format(new Date(member.birthDate), 'MMM/dd/yyyy')
+									: ''}
+							</td>
 						</tr>
 						<tr>
 							<td className="text-muted-foreground">D.O.D</td>
-							<td>{formatDate(member.deathDate)}</td>
+							<td>
+								{member.deathDate
+									? format(new Date(member.deathDate), 'MMM/dd/yyyy')
+									: ''}
+							</td>
 						</tr>
 					</tbody>
 				</table>
