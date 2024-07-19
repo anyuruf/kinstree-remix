@@ -31,8 +31,8 @@ export const validator = withZod(
 		nationality: z
 			.string()
 			.max(96, { message: 'Nationality characters may not exceed 48' }),
-		birthDate: z.string(), //Turn string to date
-		deathDate: z.string(),
+		birthDate: z.string(), // No need for date validation as parseDate below
+		deathDate: z.string(), // will throw with an invalid string
 		description: z
 			.string()
 			.max(512, { message: 'Description characters may not exceed 512' }),
