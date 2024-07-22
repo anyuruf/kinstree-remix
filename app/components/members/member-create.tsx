@@ -15,7 +15,7 @@ export function MemberCreate({ validator }: any): ReactNode {
 			<ValidatedForm
 				validator={validator}
 				method="post"
-				//creates space between the action buttons  n textarea as well
+				//creates space between the action buttons  n textarea as the title
 				className="space-y-4"
 				id="create-member-form"
 			>

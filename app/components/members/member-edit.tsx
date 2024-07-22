@@ -28,7 +28,7 @@ export function MemberEdit({
 				id="edit-form"
 				validator={validator}
 				method="post"
-				//creates space between the action buttons n textarea as well
+				//creates space between the action buttons n textarea as title
 				className="space-y-4"
 			>
 				<Input name="id" type="hidden" />
