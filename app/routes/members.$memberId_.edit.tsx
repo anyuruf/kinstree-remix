@@ -1,11 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import FormInput from '@/components/ui/form-input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
 import { initializeDb } from '@/db.server/config.server';
 import { editMember, getMember } from '@/db.server/members.server';
-import { redirect, useNavigate, useRouteLoaderData } from '@remix-run/react';
+import { redirect } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import {
 	ValidatedForm,
@@ -57,7 +52,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 		throw new Response('Not Found', { status: 404 });
 	}
 	return json(
-		setFormDefaults('editForm', {
+		setFormDefaults('edit-form', {
 			...member,
 		}),
 	);
