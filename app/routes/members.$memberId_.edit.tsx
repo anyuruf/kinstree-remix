@@ -1,12 +1,8 @@
 import { initializeDb } from '@/db.server/config.server';
 import { editMember, getMember } from '@/db.server/members.server';
-import { redirect } from '@remix-run/react';
+import { redirect, useLoaderData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
-import {
-	ValidatedForm,
-	setFormDefaults,
-	validationError,
-} from 'remix-validated-form';
+import { setFormDefaults, validationError } from 'remix-validated-form';
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';
@@ -51,11 +47,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	if (!member) {
 		throw new Response('Not Found', { status: 404 });
 	}
-	return json(
-		setFormDefaults('edit-form', {
-			...member,
-		}),
-	);
+	return member;
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -72,5 +64,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function EditMember() {
-	return <MemberEdit validator={validator} />;
+	const member = useLoaderData<typeof loader>();
+	return <MemberEdit validator={validator} defaultValue={member} />;
 }

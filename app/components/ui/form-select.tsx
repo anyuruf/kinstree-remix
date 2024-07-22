@@ -12,11 +12,13 @@ type FormSelectInput = {
 	name: string;
 	label: string;
 	placeholder: string;
+	defaultValue?: string | undefined;
 };
 export default function FormSelect({
 	name,
 	label,
 	placeholder,
+	defaultValue,
 }: FormSelectInput) {
 	const { error, getInputProps } = useField(name);
 
@@ -28,7 +30,7 @@ export default function FormSelect({
 				className="text-sm font-medium leading-6"
 			/>
 			<div className="mt-2">
-				<Select name={name} {...getInputProps}>
+				<Select name={name} defaultValue={defaultValue} {...getInputProps}>
 					<SelectTrigger>
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>
