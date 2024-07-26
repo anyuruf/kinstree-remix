@@ -5,7 +5,6 @@ import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { ReactNode } from 'react';
 import FormSelect from '../ui/form-select';
-import { SelectMember } from '@/db.server/schema';
 import { Input } from '../ui/input';
 import FormShell from './form-shell';
 

@@ -2,7 +2,7 @@ import { initializeDb } from '@/db.server/config.server';
 import { editMember, getMember } from '@/db.server/members.server';
 import { redirect, useLoaderData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
-import { setFormDefaults, validationError } from 'remix-validated-form';
+import { validationError } from 'remix-validated-form';
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';

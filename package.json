@@ -6,6 +6,7 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "dotenv -- node ./server.js",
+    "test": "vitest",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "db:generate": "drizzle-kit generate:pg",
     "typecheck": "tsc"
@@ -47,13 +48,18 @@
   },
   "devDependencies": {
     "@remix-run/dev": "2.10.3",
+    "@remix-run/testing": "^2.10.3",
     "@tailwindcss/typography": "0.5.10",
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "20.11.19",
     "@types/react": "18.2.56",
     "@types/react-dom": "18.2.19",
+    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "10.4.17",
     "dotenv-cli": "7.3.0",
     "drizzle-kit": "0.20.14",
+    "jsdom": "^24.1.1",
     "postcss": "8.4.35",
     "postgres": "^3.4.4",
     "prettier": "3.2.5",
@@ -62,7 +68,8 @@
     "typescript": "5.3.3",
     "vite": "^5.2.8",
     "vite-env-only": "2.2.0",
-    "vite-tsconfig-paths": "4.3.1"
+    "vite-tsconfig-paths": "4.3.1",
+    "vitest": "^2.0.4"
   },
   "engines": {
     "node": ">=20.0.0"
