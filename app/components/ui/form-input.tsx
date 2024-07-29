@@ -17,7 +17,7 @@ const FormInput = ({ name, label, ...props }: FormInputProps) => {
 				className="text-sm font-medium leading-6"
 			/>
 			<div className="mt-2">
-				<Input name={name} {...props} />
+				<Input name={name} id={name} {...props} />
 			</div>
 		</div>
 	);

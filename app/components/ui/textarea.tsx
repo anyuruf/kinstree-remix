@@ -19,6 +19,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 					name={name}
 					label={label}
 					className="text-sm font-medium leading-6"
+					htmlFor={name}
 				/>
 				<div className="mt-2">
 					<textarea
@@ -28,6 +29,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 							className,
 						)}
 						ref={ref}
+						id={name}
 						{...props}
 						{...getInputProps}
 					/>

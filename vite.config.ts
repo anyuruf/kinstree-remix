@@ -20,9 +20,9 @@ export default defineConfig({
 		globals: true,
 		setupFiles: ['app/_tests_/setup.ts'],
 		includeSource: ['app/_tests_'],
-		/* coverage: {
+		coverage: {
 			reportsDirectory: './_tests_/coverage',
-		}, */
+		},
 	},
 	plugins: [
 		envOnly(),
