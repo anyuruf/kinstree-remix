@@ -27,10 +27,16 @@ export default function FormSelect({
 			<Label
 				name={name}
 				label={label}
+				htmlFor={name}
 				className="text-sm font-medium leading-6"
 			/>
 			<div className="mt-2">
-				<Select name={name} defaultValue={defaultValue} {...getInputProps}>
+				<Select
+					name={name}
+					defaultValue={defaultValue}
+					{...getInputProps}
+					required
+				>
 					<SelectTrigger>
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>

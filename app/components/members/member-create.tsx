@@ -18,9 +18,11 @@ export function MemberCreate({ validator }: any): ReactNode {
 				//creates space between the action buttons  n textarea as the title
 				className="space-y-4"
 				id="create-member-form"
+				// Added role for testing and accessibilty purposes
+				role="form"
 			>
-				<FormInput name="firstName" label="First Name" />
-				<FormInput name="lastName" label="Last Name" />
+				<FormInput name="firstName" label="First name" required />
+				<FormInput name="lastName" label="Last name" required />
 				<FormInput name="kingdomClan" label="Kingdom-Clan" />
 				<FormInput name="nationality" label="Nationality" />
 				<FormSelect
@@ -32,7 +34,7 @@ export function MemberCreate({ validator }: any): ReactNode {
 				<FormInput name="deathDate" label="Death date" type="date" />
 				<Textarea name="description" label="Description" />
 				<FormShell.Footer className="flex justify-between">
-					<Button type="submit">Create </Button>
+					<Button type="submit">Create member</Button>
 					<Button variant="ghost" type="button">
 						Cancel
 					</Button>
