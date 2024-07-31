@@ -6,6 +6,7 @@ import { ActionFunctionArgs, redirect } from '@remix-run/node';
 import { z } from 'zod';
 import { parseISO } from 'date-fns';
 import { MemberCreate } from '@/components/members/member-create';
+import { useActionData } from '@remix-run/react';
 
 const genderEnum = ['male', 'female'] as const;
 
@@ -51,5 +52,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function CreateMember() {
-	return <MemberCreate validator={validator} />;
+	const actionData = useActionData<typeof action>();
+	console.log(actionData?.repopulateFields);
+
+	return (
+		<MemberCreate
+			validator={validator}
+			defaultValues={actionData?.repopulateFields}
+		/>
+	);
 }

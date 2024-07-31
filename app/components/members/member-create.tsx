@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ValidatedForm } from 'remix-validated-form';
 import { ReactNode } from 'react';
 
-export function MemberCreate({ validator }: any): ReactNode {
+export function MemberCreate({ validator, defaultValues }: any): ReactNode {
 	return (
 		<FormShell
 			title="Create Member"
@@ -18,6 +18,7 @@ export function MemberCreate({ validator }: any): ReactNode {
 				//creates space between the action buttons  n textarea as the title
 				className="space-y-4"
 				id="create-member-form"
+				defaultValues={defaultValues}
 				// Added role for testing and accessibilty purposes
 				role="form"
 			>
