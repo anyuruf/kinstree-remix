@@ -1,12 +1,10 @@
 import { MemberCreate } from '@/components/members/member-create';
 import { validator } from '@/routes/members.create';
-import { logRoles, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { createRemixStub } from '@remix-run/testing';
 import { validationError } from 'remix-validated-form';
 import { ActionFunctionArgs } from '@remix-run/node';
-import { string } from 'zod';
-import { extractRemixPluginContext } from '@remix-run/dev/dist/vite/plugin';
 
 describe('Create member component', () => {
 	const RemixStub = createRemixStub([
@@ -20,6 +18,14 @@ describe('Create member component', () => {
 			Component: () => <MemberCreate validator={validator} />,
 		},
 	]);
+
+	/**
+	 * interface labelTextAttrInput {
+	 * label: string;
+	 * name: string;
+	 * selector?: string;
+	 * }
+	 */
 	interface labelTextAttrInput {
 		label: string;
 		name: string;
