@@ -40,7 +40,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error, data.submittedData);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-
 	const db = initializeDb(process.env.DATABASE_URL!);
 	const createdMember = await createMember(db, {
 		birthDate: birthDate ? parseISO(birthDate) : undefined,
@@ -53,7 +52,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function CreateMember() {
 	const actionData = useActionData<typeof action>();
-	console.log(actionData?.repopulateFields);
 
 	return (
 		<MemberCreate

@@ -40,7 +40,7 @@ export async function getMembers(
 }
 
 export async function editMember(
-	db: any,
+	db: PgDB,
 	{
 		id,
 		lastName,
