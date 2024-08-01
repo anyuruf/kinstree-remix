@@ -10,9 +10,9 @@ import { installGlobals } from '@remix-run/node';
 
 installGlobals();
 export default defineConfig({
-	ssr: {
-		noExternal: ['drizzle-orm', 'nanoid', 'remix-validated-form'],
-	},
+	/* ssr: {
+		noExternal: ['drizzle-orm'],
+	}, */
 	test: {
 		// See the list of config options in the Config Reference:
 		// https://vitest.dev/config/
