@@ -40,7 +40,7 @@ export async function getMembers(
 }
 
 export async function editMember(
-	db: PgDB,
+	db: any,
 	{
 		id,
 		lastName,
@@ -48,10 +48,11 @@ export async function editMember(
 		description,
 		gender,
 		kingdomClan,
+		nationality,
 		birthDate,
 		deathDate,
 		avatarUrl,
-	}: SelectMember,
+	}: any,
 ) {
 	return (
 		(
@@ -63,6 +64,7 @@ export async function editMember(
 					description,
 					gender,
 					kingdomClan,
+					nationality,
 					birthDate,
 					deathDate,
 					avatarUrl,

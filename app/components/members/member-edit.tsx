@@ -30,26 +30,36 @@ export function MemberEdit({
 				//creates space between the action buttons n textarea as title
 				className="space-y-4"
 			>
-				<Input name="id" type="hidden" />
+				<Input
+					name="id"
+					type="hidden"
+					defaultValue={defaultValue.id}
+					minLength={21}
+					maxLength={21}
+				/>
 				<FormInput
 					name="firstName"
 					label="First Name"
 					defaultValue={defaultValue.firstName}
+					maxLength={48}
 				/>
 				<FormInput
 					name="lastName"
 					label="Last Name"
 					defaultValue={defaultValue.lastName}
+					maxLength={48}
 				/>
 				<FormInput
 					name="kingdomClan"
 					label="Kingdom-Clan"
 					defaultValue={defaultValue.kingdomClan}
+					maxLength={96}
 				/>
 				<FormInput
 					name="nationality"
 					label="Nationality"
 					defaultValue={defaultValue.nationality}
+					maxLength={48}
 				/>
 				<FormSelect
 					name="gender"
@@ -61,6 +71,8 @@ export function MemberEdit({
 					name="avatarUrl"
 					type="hidden"
 					defaultValue={defaultValue.avatarUrl}
+					minLength={21}
+					maxLength={21}
 				/>
 				<FormInput
 					name="birthDate"
@@ -78,6 +90,7 @@ export function MemberEdit({
 					name="description"
 					label="Description"
 					defaultValue={defaultValue.description}
+					maxLength={640}
 				/>
 				<FormShell.Footer className="flex justify-between">
 					<Button type="submit">Save Changes</Button>

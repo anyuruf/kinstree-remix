@@ -22,10 +22,15 @@ export function MemberCreate({ validator, defaultValues }: any): ReactNode {
 				// Added role for testing and accessibilty purposes
 				role="form"
 			>
-				<FormInput name="firstName" label="First name" required />
-				<FormInput name="lastName" label="Last name" required />
-				<FormInput name="kingdomClan" label="Kingdom-Clan" />
-				<FormInput name="nationality" label="Nationality" />
+				<FormInput
+					name="firstName"
+					label="First name"
+					maxLength={48}
+					required
+				/>
+				<FormInput name="lastName" label="Last name" maxLength={48} required />
+				<FormInput name="kingdomClan" label="Kingdom-Clan" maxLength={96} />
+				<FormInput name="nationality" label="Nationality" maxLength={48} />
 				<FormSelect
 					name="gender"
 					label="Birth Sex"
@@ -33,7 +38,7 @@ export function MemberCreate({ validator, defaultValues }: any): ReactNode {
 				/>
 				<FormInput name="birthDate" label="Birth date" type="date" />
 				<FormInput name="deathDate" label="Death date" type="date" />
-				<Textarea name="description" label="Description" />
+				<Textarea name="description" label="Description" maxLength={512} />
 				<FormShell.Footer className="flex justify-between">
 					<Button type="submit">Create member</Button>
 					<Button variant="ghost" type="button">

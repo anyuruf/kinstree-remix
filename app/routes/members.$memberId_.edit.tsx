@@ -7,6 +7,7 @@ import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';
 import { MemberEdit } from '@/components/members/member-edit';
+import { parseISO } from 'date-fns';
 
 const genderEnum = ['male', 'female'] as const;
 
@@ -54,10 +55,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 
+	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
-
 	const editedMember = await editMember(db, {
-		...data.data,
+		birthDate: birthDate ? parseISO(birthDate) : undefined,
+		deathDate: deathDate ? parseISO(deathDate) : undefined,
+		...rest,
 	});
 
 	return redirect(`/members/${editedMember.id}`);
