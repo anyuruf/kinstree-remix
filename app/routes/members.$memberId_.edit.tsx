@@ -34,9 +34,7 @@ export const validator = withZod(
 		description: z
 			.string()
 			.max(512, { message: 'Description characters may not exceed 512' }),
-		avatarUrl: z
-			.string()
-			.length(21, { message: 'Nanoid for id avatarUrl field' }),
+		avatarUrl: z.string(),
 	}),
 );
 
@@ -48,6 +46,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	if (!member) {
 		throw new Response('Not Found', { status: 404 });
 	}
+	console.log(member);
 	return member;
 };
 
@@ -55,11 +54,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 
+	console.log(data);
+
 	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
 	const editedMember = await editMember(db, {
-		birthDate: birthDate ? parseISO(birthDate) : undefined,
-		deathDate: deathDate ? parseISO(deathDate) : undefined,
+		birthDate: birthDate ? new Date(birthDate) : undefined,
+		deathDate: deathDate ? new Date(deathDate) : undefined,
 		...rest,
 	});
 

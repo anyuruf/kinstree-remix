@@ -7,12 +7,13 @@ import envOnly from 'vite-env-only';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
 import { installGlobals } from '@remix-run/node';
+import { remixDevTools } from 'remix-development-tools';
 
 installGlobals();
 export default defineConfig({
-	/* ssr: {
-		noExternal: ['drizzle-orm'],
-	}, */
+	ssr: {
+		noExternal: ['drizzle-orm', 'nanoid', '@radix-ui'],
+	},
 	test: {
 		// See the list of config options in the Config Reference:
 		// https://vitest.dev/config/
@@ -27,6 +28,7 @@ export default defineConfig({
 	plugins: [
 		envOnly(),
 		tsconfigPaths(),
+		remixDevTools(),
 		!process.env.VITEST
 			? remix({
 					future: {

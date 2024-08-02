@@ -7,6 +7,8 @@ import { ReactNode } from 'react';
 import FormSelect from '../ui/form-select';
 import { Input } from '../ui/input';
 import FormShell from './form-shell';
+import { format } from 'date-fns';
+import { formatDate } from '@/lib/formatDate';
 
 type MemberEditInput = {
 	validator: any;
@@ -52,13 +54,13 @@ export function MemberEdit({
 				<FormInput
 					name="kingdomClan"
 					label="Kingdom-Clan"
-					defaultValue={defaultValue.kingdomClan}
+					defaultValue={defaultValue?.kingdomClan}
 					maxLength={96}
 				/>
 				<FormInput
 					name="nationality"
 					label="Nationality"
-					defaultValue={defaultValue.nationality}
+					defaultValue={defaultValue?.nationality}
 					maxLength={48}
 				/>
 				<FormSelect
@@ -70,7 +72,7 @@ export function MemberEdit({
 				<Input
 					name="avatarUrl"
 					type="hidden"
-					defaultValue={defaultValue.avatarUrl}
+					defaultValue={defaultValue?.avatarUrl}
 					minLength={21}
 					maxLength={21}
 				/>
@@ -78,18 +80,19 @@ export function MemberEdit({
 					name="birthDate"
 					label="Birth date"
 					type="date"
-					defaultValue={defaultValue.birthDate}
+					defaultValue={formatDate(defaultValue?.birthDate)}
+					max={Date.now()}
 				/>
 				<FormInput
 					name="deathDate"
 					label="Death date"
 					type="date"
-					defaultValue={defaultValue.deathDate}
+					defaultValue={formatDate(defaultValue?.deathDate)}
 				/>
 				<Textarea
 					name="description"
 					label="Description"
-					defaultValue={defaultValue.description}
+					defaultValue={defaultValue?.description}
 					maxLength={640}
 				/>
 				<FormShell.Footer className="flex justify-between">

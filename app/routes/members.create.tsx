@@ -42,8 +42,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
 	const createdMember = await createMember(db, {
-		birthDate: birthDate ? parseISO(birthDate) : undefined,
-		deathDate: deathDate ? parseISO(deathDate) : undefined,
+		birthDate: birthDate ? new Date(birthDate) : undefined,
+		deathDate: deathDate ? new Date(deathDate) : undefined,
 		...rest,
 	});
 
