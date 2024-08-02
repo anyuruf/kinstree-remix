@@ -37,7 +37,7 @@ export const validator = withZod(
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	let data = await validator.validate(await request.formData());
-	if (data.error) return validationError(data.error, data.submittedData);
+	if (data.error) return validationError(data.error);
 
 	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
@@ -51,12 +51,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function CreateMember() {
-	const actionData = useActionData<typeof action>();
-
-	return (
-		<MemberCreate
-			validator={validator}
-			defaultValues={actionData?.repopulateFields}
-		/>
-	);
+	return <MemberCreate validator={validator} />;
 }

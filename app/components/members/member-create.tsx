@@ -7,7 +7,7 @@ import { ValidatedForm } from 'remix-validated-form';
 import { ReactNode } from 'react';
 import { formatDate } from '@/lib/formatDate';
 
-export function MemberCreate({ validator, defaultValue }: any): ReactNode {
+export function MemberCreate({ validator }: any): ReactNode {
 	return (
 		<FormShell
 			title="Create Member"
@@ -27,51 +27,18 @@ export function MemberCreate({ validator, defaultValue }: any): ReactNode {
 					label="First name"
 					maxLength={48}
 					required
-					defaultValue={defaultValue.firstName}
 				/>
-				<FormInput
-					name="lastName"
-					label="Last name"
-					maxLength={48}
-					required
-					defaultValue={defaultValue.lastName}
-				/>
-				<FormInput
-					name="kingdomClan"
-					label="Kingdom-Clan"
-					maxLength={96}
-					defaultValue={defaultValue.kingdomClan}
-				/>
-				<FormInput
-					name="nationality"
-					label="Nationality"
-					maxLength={48}
-					defaultValue={defaultValue.nationality}
-				/>
+				<FormInput name="lastName" label="Last name" maxLength={48} required />
+				<FormInput name="kingdomClan" label="Kingdom-Clan" maxLength={96} />
+				<FormInput name="nationality" label="Nationality" maxLength={48} />
 				<FormSelect
 					name="gender"
 					label="Birth Sex"
 					placeholder="Select birth sex"
-					defaultValue={defaultValue.gender}
 				/>
-				<FormInput
-					name="birthDate"
-					label="Birth date"
-					type="date"
-					defaultValue={formatDate(defaultValue?.birthDate)}
-				/>
-				<FormInput
-					name="deathDate"
-					label="Death date"
-					type="date"
-					defaultValue={formatDate(defaultValue?.deathDate)}
-				/>
-				<Textarea
-					name="description"
-					label="Description"
-					maxLength={512}
-					defaultValue={defaultValue?.description}
-				/>
+				<FormInput name="birthDate" label="Birth date" type="date" />
+				<FormInput name="deathDate" label="Death date" type="date" />
+				<Textarea name="description" label="Description" maxLength={512} />
 				<FormShell.Footer className="flex justify-between">
 					<Button type="submit">Create member</Button>
 					<Button variant="ghost" type="button">
