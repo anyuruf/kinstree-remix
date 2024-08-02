@@ -59,8 +59,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
 	const editedMember = await editMember(db, {
-		birthDate: birthDate ? new Date(birthDate) : undefined,
-		deathDate: deathDate ? new Date(deathDate) : undefined,
+		birthDate: birthDate ? new Date(birthDate) : null,
+		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,
 	});
 
