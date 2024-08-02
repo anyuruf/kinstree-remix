@@ -35,10 +35,10 @@ describe('Create member component', () => {
 	/**
 	 * @description
 	 * Function that checks if a given label has an input assigned with the given name
-	 * @@param {Object} labelTextAttrInput object
+	 * @param {Object} labelTextAttrInput object
 	 * @param {string} labelTextAttrInput.label - The label of the input field
  	 * @param {string} labelTextAttrInput.name - The name of the input field
- 	 * @param {string=} labelTextAttrInput.selector - The type of input used.
+ 	 * @param {string=} labelTextAttrInput.selector - An optional type of input used.
 	 * @example
 	 * labelTextAttribute({ label: 'Last Name', name: 'lastName', selector: 'input' });
 	 * @functionBody
