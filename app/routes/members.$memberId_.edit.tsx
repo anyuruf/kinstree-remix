@@ -46,7 +46,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	if (!member) {
 		throw new Response('Not Found', { status: 404 });
 	}
-	console.log(member);
 	return member;
 };
 
