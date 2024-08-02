@@ -40,13 +40,13 @@ export function MemberCreate({ validator }: any): ReactNode {
 					name="birthDate"
 					label="Birth date"
 					type="date"
-					max={Date.now()}
+					max={new Date().toISOString().split('T')[0]}
 				/>
 				<FormInput
 					name="deathDate"
 					label="Death date"
 					type="date"
-					max={Date.now()}
+					max={new Date().toISOString().split('T')[0]}
 				/>
 				<Textarea name="description" label="Description" maxLength={512} />
 				<FormShell.Footer className="flex justify-between">

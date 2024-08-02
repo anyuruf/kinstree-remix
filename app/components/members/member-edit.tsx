@@ -81,14 +81,14 @@ export function MemberEdit({
 					label="Birth date"
 					type="date"
 					defaultValue={formatDate(defaultValue?.birthDate)}
-					max={Date.now()}
+					max={new Date().toISOString().split('T')[0]}
 				/>
 				<FormInput
 					name="deathDate"
 					label="Death date"
 					type="date"
 					defaultValue={formatDate(defaultValue?.deathDate)}
-					max={Date.now()}
+					max={new Date().toISOString().split('T')[0]}
 				/>
 				<Textarea
 					name="description"
