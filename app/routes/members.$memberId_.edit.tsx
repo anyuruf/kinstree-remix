@@ -54,8 +54,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = await validator.validate(await request.formData());
 	if (data.error) return validationError(data.error, data.submittedData);
 
-	console.log(data);
-
 	const { deathDate, birthDate, ...rest } = data.data;
 	const db = initializeDb(process.env.DATABASE_URL!);
 	const editedMember = await editMember(db, {
