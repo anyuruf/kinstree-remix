@@ -36,8 +36,18 @@ export function MemberCreate({ validator }: any): ReactNode {
 					label="Birth Sex"
 					placeholder="Select birth sex"
 				/>
-				<FormInput name="birthDate" label="Birth date" type="date" />
-				<FormInput name="deathDate" label="Death date" type="date" />
+				<FormInput
+					name="birthDate"
+					label="Birth date"
+					type="date"
+					max={Date.now()}
+				/>
+				<FormInput
+					name="deathDate"
+					label="Death date"
+					type="date"
+					max={Date.now()}
+				/>
 				<Textarea name="description" label="Description" maxLength={512} />
 				<FormShell.Footer className="flex justify-between">
 					<Button type="submit">Create member</Button>

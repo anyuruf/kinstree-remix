@@ -88,6 +88,7 @@ export function MemberEdit({
 					label="Death date"
 					type="date"
 					defaultValue={formatDate(defaultValue?.deathDate)}
+					max={Date.now()}
 				/>
 				<Textarea
 					name="description"
