@@ -55,7 +55,7 @@ export function Member() {
 							<td className="text-muted-foreground">D.O.B</td>
 							<td>
 								{member.birthDate
-									? format(new Date(member.birthDate), 'MMM/dd/yyyy')
+									? format(new Date(member.birthDate), 'MMM dd, yyyy')
 									: ''}
 							</td>
 						</tr>
@@ -63,7 +63,7 @@ export function Member() {
 							<td className="text-muted-foreground">D.O.D</td>
 							<td>
 								{member.deathDate
-									? format(new Date(member.deathDate), 'MMM/dd/yyyy')
+									? format(new Date(member.deathDate), 'MMM dd, yyyy')
 									: ''}
 							</td>
 						</tr>
