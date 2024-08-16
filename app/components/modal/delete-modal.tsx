@@ -10,22 +10,22 @@ export function DeleteModal() {
 					Delete
 				</Button>
 			</Modal.Button>
-			<Modal.Content title="Sure want to delete the member?">
-				<p className="mt-4">
-					This action cannot be undone. Are you sure want to permanently delete
-					this member from the servers?
+			<Modal.Content title="Delete member info!">
+				<p className="mt-4 text-sm text-muted-foreground">
+					This action cannot be undone. Sure want to permanently delete member's
+					information from the servers?
 				</p>
-				<div className="flex items-center justify-around pt-6">
-					<Modal.Close asChild>
-						<Button variant="outline" size="lg">
-							Cancel
-						</Button>
-					</Modal.Close>
+				<div className="flex items-center gap-4 md:gap-0 sm:flex-row-reverse justify-around pt-6">
 					<Form method="post">
 						<Button variant="destructive" size="lg">
 							Confirm Delete
 						</Button>
 					</Form>
+					<Modal.Close asChild>
+						<Button variant="outline" size="lg">
+							Cancel
+						</Button>
+					</Modal.Close>
 				</div>
 			</Modal.Content>
 		</Modal>
