@@ -37,14 +37,14 @@ describe('Create member component', () => {
 	 * Function that checks if a given label has an input assigned with the given name
 	 * @param {Object} labelTextAttrInput object
 	 * @param {string} labelTextAttrInput.label - The label of the input field
- 	 * @param {string} labelTextAttrInput.name - The name of the input field
- 	 * @param {string=} labelTextAttrInput.selector - An optional type of input used.
+	 * @param {string} labelTextAttrInput.name - The name of the input field
+	 * @param {string=} labelTextAttrInput.selector - An optional type of input used.
 	 * @example
 	 * labelTextAttribute({ label: 'Last Name', name: 'lastName', selector: 'input' });
 	 * @functionBody
 	 * expect(
-			screen.getByLabelText(label, { selector: selector }),
-		).toHaveAttribute('name', name);
+	 *	screen.getByLabelText(label, { selector: selector }),
+	 *	).toHaveAttribute('name', name);
 	 * */
 
 	function labelTextAttribute({
