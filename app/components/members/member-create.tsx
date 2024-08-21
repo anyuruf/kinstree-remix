@@ -5,7 +5,6 @@ import FormInput from '@/components/ui/form-input';
 import { Textarea } from '@/components/ui/textarea';
 import { ValidatedForm } from 'remix-validated-form';
 import { ReactNode } from 'react';
-import { formatDate } from '@/lib/formatDate';
 
 export function MemberCreate({ validator }: any): ReactNode {
 	return (

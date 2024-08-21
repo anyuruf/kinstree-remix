@@ -4,9 +4,7 @@ import { withZod } from '@remix-validated-form/with-zod';
 import { validationError } from 'remix-validated-form';
 import { ActionFunctionArgs, redirect } from '@remix-run/node';
 import { z } from 'zod';
-import { parseISO } from 'date-fns';
 import { MemberCreate } from '@/components/members/member-create';
-import { useActionData } from '@remix-run/react';
 
 const genderEnum = ['male', 'female'] as const;
 

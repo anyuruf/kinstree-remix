@@ -1,16 +1,19 @@
 import Modal from './modal';
 import { Button } from '../ui/button';
 import { Form } from '@remix-run/react';
+import { useState } from 'react';
 
 export function DeleteModal() {
+	const [open, setOpen] = useState(false);
+
 	return (
-		<Modal>
+		<Modal open={open} onOpenChange={setOpen}>
 			<Modal.Button asChild>
 				<Button variant="destructive" size="lg">
 					Delete
 				</Button>
 			</Modal.Button>
-			<Modal.Content title="Delete member info!">
+			<Modal.Content title="Delete member info!" open={open}>
 				<p className="mt-4 text-sm text-muted-foreground">
 					This action cannot be undone. Sure want to permanently delete member's
 					information from the servers?

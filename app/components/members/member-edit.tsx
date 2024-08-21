@@ -1,4 +1,4 @@
-import { useNavigate } from '@remix-run/react';
+import { useLoaderData, useNavigate } from '@remix-run/react';
 import { ValidatedForm } from 'remix-validated-form';
 import FormInput from '../ui/form-input';
 import { Textarea } from '../ui/textarea';
@@ -7,19 +7,19 @@ import { ReactNode } from 'react';
 import FormSelect from '../ui/form-select';
 import { Input } from '../ui/input';
 import FormShell from './form-shell';
-import { format } from 'date-fns';
 import { formatDate } from '@/lib/formatDate';
+import { Member } from '@/types';
 
 type MemberEditInput = {
 	validator: any;
-	defaultValue: any;
 };
 
-export function MemberEdit({
-	validator,
-	defaultValue,
-}: MemberEditInput): ReactNode {
+export function MemberEdit({ validator }: MemberEditInput): ReactNode {
 	const navigate = useNavigate();
+
+	// Could not use the default loader type; type errors in form for default fields
+	const defaultValue = useLoaderData<Member>();
+
 	return (
 		<FormShell
 			title="Edit Member"

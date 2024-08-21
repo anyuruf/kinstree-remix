@@ -14,7 +14,6 @@ import { format } from 'date-fns';
 
 export function Member() {
 	const { member } = useLoaderData<typeof loader>();
-
 	const fullName = `${member.firstName} ${member.lastName}`;
 
 	return (

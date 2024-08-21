@@ -1,4 +1,3 @@
-import { initializeDb } from '@/db.server/config.server';
 import { editMember, getMember } from '@/db.server/members.server';
 import { redirect, useLoaderData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
@@ -7,7 +6,6 @@ import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { z } from 'zod';
 import { MemberEdit } from '@/components/members/member-edit';
-import { parseISO } from 'date-fns';
 
 const genderEnum = ['male', 'female'] as const;
 
@@ -40,8 +38,7 @@ export const validator = withZod(
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
 	invariant(params.memberId, 'Expected memberId param');
-	const db = initializeDb(process.env.DATABASE_URL!);
-	const member = await getMember(db, params.memberId);
+	const member = await getMember(params.memberId);
 
 	if (!member) {
 		throw new Response('Not Found', { status: 404 });
@@ -54,8 +51,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error, data.submittedData);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-	const db = initializeDb(process.env.DATABASE_URL!);
-	const editedMember = await editMember(db, {
+	const editedMember = await editMember({
 		birthDate: birthDate ? new Date(birthDate) : null,
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,
@@ -65,6 +61,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function EditMember() {
-	const member = useLoaderData<typeof loader>();
-	return <MemberEdit validator={validator} defaultValue={member} />;
+	return <MemberEdit validator={validator} />;
 }

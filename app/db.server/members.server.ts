@@ -1,5 +1,6 @@
 import { PgDB, SelectMember, members, parents } from '@/db.server/schema';
 import { eq } from 'drizzle-orm/sql';
+import { initializeDb } from './config.server';
 
 export async function createMember(
 	db: PgDB,
@@ -39,21 +40,19 @@ export async function getMembers(
 	return await db.select().from(members);
 }
 
-export async function editMember(
-	db: PgDB,
-	{
-		id,
-		lastName,
-		firstName,
-		description,
-		gender,
-		kingdomClan,
-		nationality,
-		birthDate,
-		deathDate,
-		avatarUrl,
-	}: any,
-) {
+export async function editMember({
+	id,
+	lastName,
+	firstName,
+	description,
+	gender,
+	kingdomClan,
+	nationality,
+	birthDate,
+	deathDate,
+	avatarUrl,
+}: any) {
+	const db = initializeDb(process.env.DATABASE_URL!);
 	return (
 		(
 			await db
@@ -76,21 +75,26 @@ export async function editMember(
 }
 
 export async function getMember(
-	db: PgDB,
 	id: SelectMember['id'],
 ): Promise<SelectMember | null | undefined> {
+	const db = initializeDb(process.env.DATABASE_URL!);
 	return await db.query.members.findFirst({
 		where: eq(members.id, id),
 	});
 }
 
-export async function getChildren(
-	db: PgDB,
-	id: SelectMember['id'],
-): Promise<any> {
+export async function getChildren(id: SelectMember['id']): Promise<any> {
+	const db = initializeDb(process.env.DATABASE_URL!);
 	return await db
 		.select()
 		.from(parents)
 		.innerJoin(members, eq(parents.target, members.id))
 		.where(eq(parents.source, id));
+}
+
+export async function deleteMember(
+	memberId: SelectMember['id'],
+): Promise<void> {
+	const db = initializeDb(process.env.DATABASE_URL!);
+	await db.delete(members).where(eq(members.id, memberId));
 }
