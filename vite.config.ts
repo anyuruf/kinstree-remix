@@ -12,11 +12,11 @@ import { remixDevTools } from 'remix-development-tools';
 installGlobals();
 export default defineConfig({
 	ssr: {
-		noExternal: ['drizzle-orm', 'nanoid', '@radix-ui'],
+		noExternal: ['drizzle-orm', 'nanoid', '@radix-ui', 'framer-motion'],
 	},
 	test: {
 		// See the list of config options in the Config Reference:
-		// https://vitest.dev/config/
+		// https://vitest.dev/config/'''i
 		environment: 'jsdom',
 		globals: true,
 		setupFiles: ['app/_tests_/setup.ts'],
