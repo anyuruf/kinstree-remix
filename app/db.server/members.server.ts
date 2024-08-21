@@ -10,6 +10,7 @@ export async function createMember({
 	kingdomClan,
 	birthDate,
 	deathDate,
+	nationality,
 	avatarUrl,
 }: any): Promise<SelectMember> {
 	const db = initializeDb(process.env.DATABASE_URL!);
@@ -26,6 +27,7 @@ export async function createMember({
 					kingdomClan,
 					birthDate,
 					deathDate,
+					nationality,
 					avatarUrl,
 				})
 				.returning()
