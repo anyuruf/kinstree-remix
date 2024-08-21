@@ -1,4 +1,3 @@
-import { initializeDb } from '@/db.server/config.server';
 import { createMember } from '@/db.server/members.server';
 import { validationError } from 'remix-validated-form';
 import { ActionFunctionArgs, redirect } from '@remix-run/node';
@@ -10,8 +9,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-	const db = initializeDb(process.env.DATABASE_URL!);
-	const createdMember = await createMember(db, {
+	const createdMember = await createMember({
 		birthDate: birthDate ? new Date(birthDate) : null,
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,

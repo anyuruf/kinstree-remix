@@ -2,13 +2,10 @@ import { Header } from '@/components/header';
 import { NavLink, Outlet, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { getMembers } from '@/db.server/members.server';
-import { initializeDb } from '@/db.server/config.server';
 import { cn } from '@/lib/styles';
 
 export async function loader() {
-	const db = initializeDb(process.env.DATABASE_URL!);
-	const members = await getMembers(db);
-
+	const members = await getMembers();
 	return json({
 		members,
 	});

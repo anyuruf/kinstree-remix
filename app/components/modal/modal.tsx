@@ -65,7 +65,7 @@ function ModalContent({
 							></m.div>
 						</Dialog.Overlay>
 						<Dialog.Content
-							className="fixed max-sm:bottom-0 sm:top-1/3 sm:left-1/3 bg-background text-foreground max-sm:mx-.5 p-8 sm:py-10 shadow rounded-md text-md sm:w-full max-w-md  max-sm:[--y-closed:18px] [--opacity-closed:0%] sm:[--scale-closed:90%]
+							className="fixed max-sm:bottom-0 sm:top-1/3 sm:left-1/3 bg-background text-foreground max-sm:mx-2 p-8 sm:py-10 shadow rounded-md text-md sm:w-full max-w-md  max-sm:[--y-closed:18px] [--opacity-closed:0%] sm:[--scale-closed:90%]
                       max-sm:[--y-open:0px] [--opacity-open:100%] sm:[--scale-open:100%]"
 							asChild
 						>

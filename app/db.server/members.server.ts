@@ -2,19 +2,18 @@ import { PgDB, SelectMember, members, parents } from '@/db.server/schema';
 import { eq } from 'drizzle-orm/sql';
 import { initializeDb } from './config.server';
 
-export async function createMember(
-	db: PgDB,
-	{
-		lastName,
-		firstName,
-		description,
-		gender,
-		kingdomClan,
-		birthDate,
-		deathDate,
-		avatarUrl,
-	}: any,
-): Promise<SelectMember> {
+export async function createMember({
+	lastName,
+	firstName,
+	description,
+	gender,
+	kingdomClan,
+	birthDate,
+	deathDate,
+	avatarUrl,
+}: any): Promise<SelectMember> {
+	const db = initializeDb(process.env.DATABASE_URL!);
+
 	return (
 		(
 			await db
@@ -34,9 +33,8 @@ export async function createMember(
 	);
 }
 
-export async function getMembers(
-	db: PgDB,
-): Promise<SelectMember[] | null | undefined> {
+export async function getMembers(): Promise<SelectMember[] | null | undefined> {
+	const db = initializeDb(process.env.DATABASE_URL!);
 	return await db.select().from(members);
 }
 
