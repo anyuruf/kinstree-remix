@@ -12,7 +12,14 @@ import { remixDevTools } from 'remix-development-tools';
 installGlobals();
 export default defineConfig({
 	ssr: {
-		noExternal: ['drizzle-orm', 'nanoid', '@radix-ui', 'framer-motion'],
+		noExternal: [
+			'drizzle-orm',
+			'nanoid',
+			'@radix-ui',
+			'framer-motion',
+			'remix-utils',
+			'react-force-graph-2d',
+		],
 	},
 	test: {
 		// See the list of config options in the Config Reference:

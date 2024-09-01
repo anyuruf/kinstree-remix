@@ -8,7 +8,7 @@ import FormSelect from '../ui/form-select';
 import { Input } from '../ui/input';
 import FormShell from './form-shell';
 import { formatDate } from '@/lib/formatDate';
-import { Member } from '@/types';
+import { MemberData } from '@/types';
 
 type MemberEditInput = {
 	validator: any;
@@ -18,7 +18,7 @@ export function MemberEdit({ validator }: MemberEditInput): ReactNode {
 	const navigate = useNavigate();
 
 	// Could not use the default loader type; type errors in form for default fields
-	const defaultValue = useLoaderData<Member>();
+	const defaultValue = useLoaderData<MemberData>();
 
 	return (
 		<FormShell

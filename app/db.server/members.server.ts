@@ -1,4 +1,9 @@
-import { PgDB, SelectMember, members, parents } from '@/db.server/schema';
+import {
+	SelectMember,
+	SelectParent,
+	members,
+	parents,
+} from '@/db.server/schema';
 import { eq } from 'drizzle-orm/sql';
 import { initializeDb } from './config.server';
 
@@ -83,18 +88,15 @@ export async function getMember(
 	});
 }
 
-export async function getChildren(id: SelectMember['id']): Promise<any> {
-	const db = initializeDb(process.env.DATABASE_URL!);
-	return await db
-		.select()
-		.from(parents)
-		.innerJoin(members, eq(parents.target, members.id))
-		.where(eq(parents.source, id));
-}
-
 export async function deleteMember(
 	memberId: SelectMember['id'],
 ): Promise<void> {
 	const db = initializeDb(process.env.DATABASE_URL!);
 	await db.delete(members).where(eq(members.id, memberId));
+}
+
+// Parents
+export async function getParents(): Promise<SelectParent[] | null | undefined> {
+	const db = initializeDb(process.env.DATABASE_URL!);
+	return await db.select().from(parents);
 }
