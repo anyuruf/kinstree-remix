@@ -11,6 +11,7 @@ import { Button } from '../ui/button';
 import { loader } from '@/routes/members.$memberId';
 import { DeleteModal } from '../modal/delete-modal';
 import { format } from 'date-fns';
+import { NODE_IMAGE_BOX_USER } from '@/constants';
 
 export function Member() {
 	const { member } = useLoaderData<typeof loader>();
@@ -24,7 +25,7 @@ export function Member() {
 			<CardContent className="grid gap-8">
 				<div className="flex items-center gap-4">
 					<Avatar className="hidden h-16 w-16 sm:flex">
-						<AvatarImage src="/avatars/01.png" alt="Avatar" />
+						<AvatarImage src={NODE_IMAGE_BOX_USER} alt="Avatar" />
 						<AvatarFallback delayMs={600}>OM</AvatarFallback>
 					</Avatar>
 					<div className="grid gap-1">
