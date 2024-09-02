@@ -6,7 +6,6 @@ import { PeopleGraph } from '@/components/members/member-graph';
 
 export async function loader() {
 	const [members, parents] = await Promise.all([getMembers(), getParents()]);
-	console.log(members, parents);
 	return json({
 		nodes: members,
 		links: parents,

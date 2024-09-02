@@ -8,9 +8,15 @@ import {
 } from 'react';
 import { type NodeObject, type LinkObject } from 'react-force-graph-2d';
 import { GraphData, LinkData, NodeData } from '@/types';
+import {
+	FEMALE_NODE_SIZE,
+	MALE_NODE_SIZE,
+	NODE_IMAGE_BOX_USER,
+	NODE_IMAGE_ROUND_USER,
+} from '@/constants';
 
-type Node = NodeObject<NodeData> & { links?: Link[]; id: string };
-type Link = LinkObject<NodeData, LinkData> & { id: string };
+type Node = NodeData & NodeObject;
+type Link = LinkObject<NodeData, LinkData>;
 type NodeMap = Record<string, Node>;
 type Data = { graph: { nodes: Node[]; links: Link[] }; nodeMap: NodeMap };
 type Ctx = any; // eslint-disable-line
@@ -71,7 +77,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 	}, [activeNodeId, data.nodes, nodeMap]);
 
 	const getLinkColor = useCallback(
-		(link: Link): string => {
+		(link: any): string => {
 			return link.id && highlightLinks.has(link.id)
 				? 'rgba(0, 174, 239, 0.4)'
 				: 'rgba(170, 170, 170, 0.5)';
@@ -91,9 +97,10 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		[highlightLinks],
 	);
 
-	const getNodeSize = useCallback((node: Node): number => {
-		if (node.gender === 'male') return 8;
-		return 7;
+	const getNodeOptions = useCallback((node: Node) => {
+		return node.gender === 'male'
+			? { size: MALE_NODE_SIZE, url: NODE_IMAGE_BOX_USER }
+			: { size: FEMALE_NODE_SIZE, url: NODE_IMAGE_ROUND_USER };
 	}, []);
 
 	const handleNodeInteraction = useCallback(
@@ -108,16 +115,16 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 	const handleNodePaint = useCallback(
 		(node: any, ctx: Ctx) => {
 			if (!node.x || !node.y) return;
-			let size = getNodeSize(node);
+			const { size, url } = getNodeOptions(node);
 			const image = new Image();
-			image.src = 'app/assets/react-force-graph/user-round.svg';
+			image.src = url;
 			ctx.beginPath();
 			ctx.arc(node.x, node.y, size / 2, 0, 2 * Math.PI, false);
 			ctx.fillStyle = '#555';
 			ctx.fill();
 			ctx.drawImage(image, node.x - size / 2, node.y - size / 2, size, size);
 		},
-		[getNodeSize],
+		[getNodeOptions],
 	);
 
 	return (
@@ -126,8 +133,8 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 				d3VelocityDecay={0.6}
 				graphData={data}
 				nodeCanvasObject={handleNodePaint}
-				/* linkColor={getLinkColor}
-				linkDirectionalParticleWidth={linkDirectionalParticleWidth}
+				linkColor={getLinkColor}
+				/*linkDirectionalParticleWidth={linkDirectionalParticleWidth}
 				linkDirectionalParticles={4}
 				linkWidth={getLinkWidth}
 				minZoom={0.75}
