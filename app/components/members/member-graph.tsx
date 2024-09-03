@@ -79,21 +79,21 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 	const getLinkColor = useCallback(
 		(link: any): string => {
 			return link.id && highlightLinks.has(link.id)
-				? 'rgba(0, 174, 239, 0.4)'
-				: 'rgba(170, 170, 170, 0.5)';
+				? 'rgba(43, 173, 0, 0.89)'
+				: 'rgba(203, 89, 0, 0.89)';
 		},
 		[highlightLinks],
 	);
 
 	const getLinkWidth = useCallback(
-		(link: Link): number => {
-			return link.id && highlightLinks.has(link.id) ? 5 : 1;
+		(link: any): number => {
+			return link.id && highlightLinks.has(link.id) ? 3.5 : 1.5;
 		},
 		[highlightLinks],
 	);
 
 	const linkDirectionalParticleWidth = useCallback(
-		(link: Link) => (link.id && highlightLinks.has(link.id) ? 4 : 0),
+		(link: any) => (link.id && highlightLinks.has(link.id) ? 3.5 : 1.5),
 		[highlightLinks],
 	);
 
@@ -104,7 +104,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 	}, []);
 
 	const handleNodeInteraction = useCallback(
-		(node: NodeObject<NodeData> | null): void => {
+		(node: any | null): void => {
 			if (node === null || node.id !== activeNodeId) {
 				setActiveNodeId(node ? node.id : null);
 			}
@@ -134,13 +134,11 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 				graphData={data}
 				nodeCanvasObject={handleNodePaint}
 				linkColor={getLinkColor}
-				/*linkDirectionalParticleWidth={linkDirectionalParticleWidth}
+				linkDirectionalParticleWidth={linkDirectionalParticleWidth}
 				linkDirectionalParticles={4}
 				linkWidth={getLinkWidth}
-				minZoom={0.75}
-				nodeCanvasObject={handleNodePaint}
-				nodeVal={getNodeSize}
-				onNodeClick={handleNodeInteraction} */
+				minZoom={0.65}
+				onNodeClick={handleNodeInteraction}
 			/>
 		</Suspense>
 	);
