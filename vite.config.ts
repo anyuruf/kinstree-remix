@@ -19,6 +19,7 @@ export default defineConfig({
 			'framer-motion',
 			'remix-utils',
 			'react-force-graph-2d',
+			'lodash',
 		],
 	},
 	test: {

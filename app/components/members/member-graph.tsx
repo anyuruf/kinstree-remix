@@ -5,8 +5,13 @@ import {
 	useCallback,
 	lazy,
 	Suspense,
+	useRef,
 } from 'react';
-import { type NodeObject, type LinkObject } from 'react-force-graph-2d';
+import {
+	type NodeObject,
+	type LinkObject,
+	ForceGraphMethods,
+} from 'react-force-graph-2d';
 import { GraphData, LinkData, NodeData } from '@/types';
 import {
 	FEMALE_NODE_SIZE,
@@ -14,6 +19,7 @@ import {
 	NODE_IMAGE_BOX_USER,
 	NODE_IMAGE_ROUND_USER,
 } from '@/constants';
+import { forceLink, forceY } from 'd3';
 
 type Node = NodeData & NodeObject;
 type Link = LinkObject<NodeData, LinkData>;
@@ -76,24 +82,26 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		setHighlightLinks(activeLinks);
 	}, [activeNodeId, data.nodes, nodeMap]);
 
-	const getLinkColor = useCallback(
-		(link: any): string => {
-			return link.id && highlightLinks.has(link.id)
-				? 'rgba(43, 173, 0, 0.89)'
-				: 'rgba(203, 89, 0, 0.89)';
-		},
-		[highlightLinks],
-	);
+	const getLinkColor = (d: any) => {
+		return nodeMap[d.source].gender ?? null;
+	};
 
 	const getLinkWidth = useCallback(
 		(link: any): number => {
-			return link.id && highlightLinks.has(link.id) ? 3.5 : 1.5;
+			return link.id && highlightLinks.has(link.id) ? 3.5 : 2;
 		},
 		[highlightLinks],
 	);
 
-	const linkDirectionalParticleWidth = useCallback(
-		(link: any) => (link.id && highlightLinks.has(link.id) ? 3.5 : 1.5),
+	const linkCurveRotation = useCallback(
+		(link: any) => {
+			return link.id && highlightLinks.has(link.id) ? 0.35 : 0.25;
+		},
+		[highlightLinks],
+	);
+
+	const linkDirectionalArrowLength = useCallback(
+		(link: any) => (link.id && highlightLinks.has(link.id) ? 5.5 : 3.5),
 		[highlightLinks],
 	);
 
@@ -126,19 +134,34 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		},
 		[getNodeOptions],
 	);
-
+	const fgRef = useRef<ForceGraphMethods>();
+	useEffect(() => {
+		if (fgRef.current) {
+			fgRef.current.d3Force(
+				'link',
+				forceLink()
+					.id((d: any) => {
+						return d.id;
+					})
+					.distance(18)
+					.strength(1),
+			);
+		}
+	}, []);
 	return (
 		<Suspense>
 			<ForceGraph
 				d3VelocityDecay={0.6}
 				graphData={data}
 				nodeCanvasObject={handleNodePaint}
-				linkColor={getLinkColor}
-				linkDirectionalParticleWidth={linkDirectionalParticleWidth}
-				linkDirectionalParticles={4}
+				linkAutoColorBy={getLinkColor}
+				linkDirectionalArrowLength={linkDirectionalArrowLength}
+				linkCurvature={linkCurveRotation}
 				linkWidth={getLinkWidth}
 				minZoom={0.65}
 				onNodeClick={handleNodeInteraction}
+				nodeLabel={'firstName'}
+				ref={fgRef}
 			/>
 		</Suspense>
 	);
