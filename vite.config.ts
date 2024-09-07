@@ -20,6 +20,8 @@ export default defineConfig({
 			'remix-utils',
 			'react-force-graph-2d',
 			'lodash',
+			'force-graph',
+			'd3',
 		],
 	},
 	test: {

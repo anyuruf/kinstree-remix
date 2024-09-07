@@ -19,7 +19,8 @@ import {
 	NODE_IMAGE_BOX_USER,
 	NODE_IMAGE_ROUND_USER,
 } from '@/constants';
-import { forceLink, forceY } from 'd3';
+import { forceCollide, forceLink, forceManyBody, forceY } from 'd3';
+import * as dat from 'dat.gui';
 
 type Node = NodeData & NodeObject;
 type Link = LinkObject<NodeData, LinkData>;
@@ -111,8 +112,56 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 			: { size: FEMALE_NODE_SIZE, url: NODE_IMAGE_ROUND_USER };
 	}, []);
 
+	const onNodeRightClick = useCallback((node: any, event: Event): any => {
+		if (node && activeNodeId && node.id !== activeNodeId) {
+			if (typeof document !== undefined) {
+				console.log(Event);
+				//Create form
+				const form = document.createElement('form');
+				form.method = 'post';
+				form.onsubmit = function () {
+					const response = confirm(
+						'Please confirm you want to add child for active member.',
+					);
+					if (!response) {
+						event.preventDefault();
+					}
+				};
+
+				// Create form inputs
+				var inputSource = document.createElement('input');
+				inputSource.type = 'text';
+				inputSource.name = 'source';
+				inputSource.maxLength = 21;
+				inputSource.minLength = 21;
+				inputSource.value = activeNodeId!;
+
+				// Create form inputs
+				var inputTarget = document.createElement('input');
+				inputTarget.type = 'text';
+				inputTarget.name = 'target';
+				inputTarget.maxLength = 21;
+				inputTarget.minLength = 21;
+				inputTarget.value = node.id;
+
+				// Create submit button
+				var buttonSubmit = document.createElement('input');
+				buttonSubmit.type = 'submit';
+				buttonSubmit.value = 'Submit';
+
+				// Add elements to form
+				form.appendChild(inputSource);
+				form.appendChild(inputTarget);
+				form.appendChild(buttonSubmit);
+
+				// SubmitForm
+				form.requestSubmit();
+			}
+		}
+	}, []);
+
 	const handleNodeInteraction = useCallback(
-		(node: any | null): void => {
+		(node: any | null): any => {
 			if (node === null || node.id !== activeNodeId) {
 				setActiveNodeId(node ? node.id : null);
 			}
@@ -134,20 +183,15 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		},
 		[getNodeOptions],
 	);
+
 	const fgRef = useRef<ForceGraphMethods>();
-	useEffect(() => {
+
+	/* useEffect(() => {
 		if (fgRef.current) {
-			fgRef.current.d3Force(
-				'link',
-				forceLink()
-					.id((d: any) => {
-						return d.id;
-					})
-					.distance(18)
-					.strength(1),
-			);
+			fgRef.current.d3Force('many-boby', forceManyBody().strength(0));
 		}
 	}, []);
+ */
 	return (
 		<Suspense>
 			<ForceGraph
@@ -160,6 +204,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 				linkWidth={getLinkWidth}
 				minZoom={0.65}
 				onNodeClick={handleNodeInteraction}
+				onNodeRightClick={onNodeRightClick}
 				nodeLabel={'firstName'}
 				ref={fgRef}
 			/>

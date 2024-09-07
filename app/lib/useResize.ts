@@ -4,8 +4,10 @@ import { debounce } from 'lodash';
 const useResize = () => {
 	const [size, setSize] = useState({});
 	useEffect(() => {
+		const container = document.getElementById('graphDiv');
+		const containerRect = container!.getBoundingClientRect();
 		const handleResize = debounce(() => {
-			setSize({ width: window.innerWidth, height: window.innerHeight });
+			setSize({ width: containerRect.width, height: containerRect.height });
 		}, 150);
 		window.addEventListener('resize', handleResize);
 

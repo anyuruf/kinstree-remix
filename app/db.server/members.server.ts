@@ -17,27 +17,23 @@ export async function createMember({
 	deathDate,
 	nationality,
 	avatarUrl,
-}: any): Promise<SelectMember> {
+}: any) {
 	const db = initializeDb(process.env.DATABASE_URL!);
 
-	return (
-		(
-			await db
-				.insert(members)
-				.values({
-					firstName,
-					lastName,
-					description,
-					gender,
-					kingdomClan,
-					birthDate,
-					deathDate,
-					nationality,
-					avatarUrl,
-				})
-				.returning()
-		)[0] ?? null
-	);
+	return await db
+		.insert(members)
+		.values({
+			firstName,
+			lastName,
+			description,
+			gender,
+			kingdomClan,
+			birthDate,
+			deathDate,
+			nationality,
+			avatarUrl,
+		})
+		.returning({ insertedId: members.id });
 }
 
 export async function getMembers(): Promise<SelectMember[] | null | undefined> {
@@ -58,25 +54,21 @@ export async function editMember({
 	avatarUrl,
 }: any) {
 	const db = initializeDb(process.env.DATABASE_URL!);
-	return (
-		(
-			await db
-				.update(members)
-				.set({
-					lastName,
-					firstName,
-					description,
-					gender,
-					kingdomClan,
-					nationality,
-					birthDate,
-					deathDate,
-					avatarUrl,
-				})
-				.where(eq(members.id, id))
-				.returning()
-		)[0] ?? null
-	);
+	return await db
+		.update(members)
+		.set({
+			lastName,
+			firstName,
+			description,
+			gender,
+			kingdomClan,
+			nationality,
+			birthDate,
+			deathDate,
+			avatarUrl,
+		})
+		.where(eq(members.id, id))
+		.returning({ insertedId: members.id });
 }
 
 export async function getMember(
@@ -99,4 +91,16 @@ export async function deleteMember(
 export async function getParents(): Promise<SelectParent[] | null | undefined> {
 	const db = initializeDb(process.env.DATABASE_URL!);
 	return await db.select().from(parents);
+}
+
+export async function createParent({ source, target }: any) {
+	const db = initializeDb(process.env.DATABASE_URL!);
+
+	return await db
+		.insert(parents)
+		.values({
+			source,
+			target,
+		})
+		.returning({ insertedId: parents.source });
 }

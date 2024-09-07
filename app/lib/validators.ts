@@ -54,3 +54,10 @@ export const editValidator = withZod(
 		avatarUrl: z.string(),
 	}),
 );
+
+export const createParentValidator = withZod(
+	z.object({
+		firstName: z.string().length(21),
+		lastName: z.string().length(21),
+	}),
+);

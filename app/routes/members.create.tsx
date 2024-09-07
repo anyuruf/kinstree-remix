@@ -9,13 +9,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-	const createdMember = await createMember({
+	const createdMemberId = await createMember({
 		birthDate: birthDate ? new Date(birthDate) : null,
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,
 	});
 
-	return redirect(`/members/${createdMember.id}`);
+	return redirect(`/members/${createdMemberId}`);
 };
 
 export default function CreateMember() {
