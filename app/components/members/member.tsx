@@ -8,7 +8,7 @@ import {
 } from '../ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
-import { loader } from '@/routes/members._$memberId';
+import { loader } from '@/routes/members_.$memberId';
 import { DeleteModal } from '../modal/delete-modal';
 import { format } from 'date-fns';
 import { NODE_IMAGE_BOX_USER } from '@/constants';

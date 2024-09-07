@@ -112,6 +112,10 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 			: { size: FEMALE_NODE_SIZE, url: NODE_IMAGE_ROUND_USER };
 	}, []);
 
+	const getLabel = useCallback((node: any) => {
+		return `${node.firstName} ${node.lastName}`;
+	}, []);
+
 	const onNodeRightClick = useCallback((node: any, event: Event): any => {
 		if (node && activeNodeId && node.id !== activeNodeId) {
 			if (typeof document !== undefined) {
@@ -205,7 +209,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 				minZoom={0.65}
 				onNodeClick={handleNodeInteraction}
 				onNodeRightClick={onNodeRightClick}
-				nodeLabel={'firstName'}
+				nodeLabel={getLabel}
 				ref={fgRef}
 			/>
 		</Suspense>
