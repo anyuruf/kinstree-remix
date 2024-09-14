@@ -1,3 +1,4 @@
+import { SimulationLinkDatum } from 'd3-force';
 export interface MemberData {
 	id: string;
 	firstName: string;
@@ -11,11 +12,21 @@ export interface MemberData {
 	avatarUrl?: string;
 }
 
-export interface NodeData extends MemberData {
+export interface NodeData extends SimulationNodeDatum {
+	id: string;
+	firstName: string;
+	lastName: string;
+	kingdomClan?: string;
+	gender?: string;
+	nationality?: string;
+	birthDate?: string;
+	deathDate?: string;
+	description?: string;
+	avatarUrl?: string;
 	links?: LinkData[];
 }
 
-export interface LinkData {
+export interface LinkData extends SimulationLinkDatum<NodeData> {
 	id: string;
 	source: string;
 	target: string;

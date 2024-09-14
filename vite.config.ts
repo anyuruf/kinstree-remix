@@ -18,10 +18,9 @@ export default defineConfig({
 			'@radix-ui',
 			'framer-motion',
 			'remix-utils',
-			'react-force-graph-2d',
 			'lodash',
-			'force-graph',
-			'd3',
+			'd3-force',
+			'react-force-graph-2d',
 		],
 	},
 	test: {

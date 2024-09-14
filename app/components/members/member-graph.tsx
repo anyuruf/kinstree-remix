@@ -7,23 +7,16 @@ import {
 	Suspense,
 	useRef,
 } from 'react';
-import {
-	type NodeObject,
-	type LinkObject,
-	ForceGraphMethods,
-} from 'react-force-graph-2d';
-import { GraphData, LinkData, NodeData } from '@/types';
+import { GraphData, type LinkData, type NodeData } from '@/types';
 import {
 	FEMALE_NODE_SIZE,
 	MALE_NODE_SIZE,
 	NODE_IMAGE_BOX_USER,
 	NODE_IMAGE_ROUND_USER,
 } from '@/constants';
-import { forceCollide, forceLink, forceManyBody, forceY } from 'd3';
-import * as dat from 'dat.gui';
 
-type Node = NodeData & NodeObject;
-type Link = LinkObject<NodeData, LinkData>;
+type Node = NodeData;
+type Link = LinkData;
 type NodeMap = Record<string, Node>;
 type Data = { graph: { nodes: Node[]; links: Link[] }; nodeMap: NodeMap };
 type Ctx = any; // eslint-disable-line
@@ -188,7 +181,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		[getNodeOptions],
 	);
 
-	const fgRef = useRef<ForceGraphMethods>();
+	const fgRef = useRef();
 
 	/* useEffect(() => {
 		if (fgRef.current) {

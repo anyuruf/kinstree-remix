@@ -46,7 +46,7 @@ export default function MembersPage() {
 					<PeopleGraph data={{ nodes, links }} />
 				</div>
 				<div className="md:col-span-3">
-					<div className="overflow-y-scroll">
+					<div>
 						<Outlet />
 					</div>
 				</div>
