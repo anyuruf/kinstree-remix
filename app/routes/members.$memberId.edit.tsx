@@ -27,7 +27,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		...rest,
 	});
 
-	return redirect(`/members/${editedMemberId}`);
+	return redirect(`/members/${editedMemberId[0].insertedId}`);
 };
 
 export default function EditMember() {

@@ -10,7 +10,7 @@ export function MemberCreate({ validator }: any): ReactNode {
 	return (
 		<FormShell
 			title="Create Member"
-			description="Fill the form fields below and click the Create button below to create a new family member"
+			description="Fill the form fields below and click the Create member button below to create a new family member"
 		>
 			<ValidatedForm
 				validator={validator}

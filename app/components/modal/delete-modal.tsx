@@ -4,6 +4,8 @@ import { Form } from '@remix-run/react';
 import { useState } from 'react';
 
 export function DeleteModal() {
+	// The delete button changes the open and setOpen variables from the modal
+	// Required for frame-motion to function
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -20,7 +22,12 @@ export function DeleteModal() {
 				</p>
 				<div className="flex items-center gap-4 md:gap-0 sm:flex-row-reverse justify-around pt-6">
 					<Form method="post">
-						<Button variant="destructive" size="lg">
+						<Button
+							variant="destructive"
+							size="lg"
+							name="_action"
+							value="delete"
+						>
 							Confirm Delete
 						</Button>
 					</Form>

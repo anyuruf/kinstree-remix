@@ -57,7 +57,7 @@ export const editValidator = withZod(
 
 export const createParentValidator = withZod(
 	z.object({
-		firstName: z.string().length(21),
-		lastName: z.string().length(21),
+		source: z.string().length(21).optional(),
+		target: z.string().length(21).optional(),
 	}),
 );

@@ -12,7 +12,7 @@ export interface MemberData {
 	avatarUrl?: string;
 }
 
-export interface NodeData extends SimulationNodeDatum {
+export interface NodeData {
 	id: string;
 	firstName: string;
 	lastName: string;

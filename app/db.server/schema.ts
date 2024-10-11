@@ -19,7 +19,7 @@ export const members = pgTable('members', {
 });
 
 export const parents = pgTable('parents', {
-	id: varchar('id', { length: 21 }).default(nanoid()).primaryKey(),
+	id: varchar('id', { length: 21 }).$defaultFn(nanoid).primaryKey(),
 	source: varchar('source', { length: 21 })
 		.notNull()
 		.references(() => members.id),

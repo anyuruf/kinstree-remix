@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, MotionConfig, motion as m } from 'framer-motion';
 
+// open and onOpenChange needed by framer-motion life-cycle methods
 export default function Modal({
 	open,
 	onOpenChange,
@@ -22,7 +23,7 @@ function ModalContent({
 	children,
 	open,
 }: {
-	title: string;
+	title?: string;
 	children: React.ReactNode;
 	open: boolean;
 }) {
@@ -75,7 +76,9 @@ function ModalContent({
 								animate="open"
 								exit="closed"
 							>
-								<Dialog.Title className="text-xl">{title}</Dialog.Title>
+								{title ? (
+									<Dialog.Title className="text-xl">{title}</Dialog.Title>
+								) : null}
 								{children}
 							</m.div>
 						</Dialog.Content>

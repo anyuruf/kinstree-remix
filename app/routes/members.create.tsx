@@ -14,8 +14,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,
 	});
-
-	return redirect(`/members/${createdMemberId}`);
+	console.log(createdMemberId);
+	return redirect(`/members/${createdMemberId[0].insertedId}`);
 };
 
 export default function CreateMember() {

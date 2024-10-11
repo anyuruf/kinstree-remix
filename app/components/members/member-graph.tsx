@@ -6,6 +6,7 @@ import {
 	lazy,
 	Suspense,
 	useRef,
+	FormEvent,
 } from 'react';
 import { GraphData, type LinkData, type NodeData } from '@/types';
 import {
@@ -14,6 +15,10 @@ import {
 	NODE_IMAGE_BOX_USER,
 	NODE_IMAGE_ROUND_USER,
 } from '@/constants';
+import { handleNodeInteraction } from '@/lib/handle-node-click';
+import { Form, useNavigate, useParams } from '@remix-run/react';
+import { Input } from '../ui/input';
+import { CreateParent } from '../modal/create-parent';
 
 type Node = NodeData;
 type Link = LinkData;
@@ -54,10 +59,21 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 
 	const [highlightLinks, setHighlightLinks] = useState(new Set<string>());
 	const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
-
+	const [clickTimeout, setClickTimeout] = useState(0);
+	const [open, setOpen] = useState(false);
+	const [parentData, setParentData] = useState({ source: '', target: '' });
+	const params = useParams();
+	const navigate = useNavigate();
+	const memberId = params.memberId;
 	// Update highlighted links when a node is selected
 	useEffect(() => {
 		const activeLinks = new Set<string>();
+
+		//Set activeNode to navigated memberId
+		if (memberId && activeNodeId !== memberId) {
+			setActiveNodeId(memberId);
+		}
+
 		if (activeNodeId) {
 			const node = nodeMap[activeNodeId];
 			if (!node) return;
@@ -74,7 +90,7 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 			});
 		}
 		setHighlightLinks(activeLinks);
-	}, [activeNodeId, data.nodes, nodeMap]);
+	}, [activeNodeId, data.nodes, nodeMap, memberId]);
 
 	const getLinkColor = (d: any) => {
 		return nodeMap[d.source].gender ?? null;
@@ -109,63 +125,6 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		return `${node.firstName} ${node.lastName}`;
 	}, []);
 
-	const onNodeRightClick = useCallback((node: any, event: Event): any => {
-		if (node && activeNodeId && node.id !== activeNodeId) {
-			if (typeof document !== undefined) {
-				console.log(Event);
-				//Create form
-				const form = document.createElement('form');
-				form.method = 'post';
-				form.onsubmit = function () {
-					const response = confirm(
-						'Please confirm you want to add child for active member.',
-					);
-					if (!response) {
-						event.preventDefault();
-					}
-				};
-
-				// Create form inputs
-				var inputSource = document.createElement('input');
-				inputSource.type = 'text';
-				inputSource.name = 'source';
-				inputSource.maxLength = 21;
-				inputSource.minLength = 21;
-				inputSource.value = activeNodeId!;
-
-				// Create form inputs
-				var inputTarget = document.createElement('input');
-				inputTarget.type = 'text';
-				inputTarget.name = 'target';
-				inputTarget.maxLength = 21;
-				inputTarget.minLength = 21;
-				inputTarget.value = node.id;
-
-				// Create submit button
-				var buttonSubmit = document.createElement('input');
-				buttonSubmit.type = 'submit';
-				buttonSubmit.value = 'Submit';
-
-				// Add elements to form
-				form.appendChild(inputSource);
-				form.appendChild(inputTarget);
-				form.appendChild(buttonSubmit);
-
-				// SubmitForm
-				form.requestSubmit();
-			}
-		}
-	}, []);
-
-	const handleNodeInteraction = useCallback(
-		(node: any | null): any => {
-			if (node === null || node.id !== activeNodeId) {
-				setActiveNodeId(node ? node.id : null);
-			}
-		},
-		[setActiveNodeId, activeNodeId],
-	);
-
 	const handleNodePaint = useCallback(
 		(node: any, ctx: Ctx) => {
 			if (!node.x || !node.y) return;
@@ -181,30 +140,39 @@ export const PeopleGraph = (props: { data: GraphData }) => {
 		[getNodeOptions],
 	);
 
-	const fgRef = useRef();
-
-	/* useEffect(() => {
-		if (fgRef.current) {
-			fgRef.current.d3Force('many-boby', forceManyBody().strength(0));
-		}
-	}, []);
- */
 	return (
-		<Suspense>
-			<ForceGraph
-				d3VelocityDecay={0.6}
-				graphData={data}
-				nodeCanvasObject={handleNodePaint}
-				linkAutoColorBy={getLinkColor}
-				linkDirectionalArrowLength={linkDirectionalArrowLength}
-				linkCurvature={linkCurveRotation}
-				linkWidth={getLinkWidth}
-				minZoom={0.65}
-				onNodeClick={handleNodeInteraction}
-				onNodeRightClick={onNodeRightClick}
-				nodeLabel={getLabel}
-				ref={fgRef}
+		<div>
+			<CreateParent
+				open={open}
+				setOpen={setOpen}
+				source={parentData.source}
+				target={parentData.target}
 			/>
-		</Suspense>
+			<Suspense>
+				<ForceGraph
+					d3VelocityDecay={0.6}
+					graphData={data}
+					nodeCanvasObject={handleNodePaint}
+					linkAutoColorBy={getLinkColor}
+					linkDirectionalArrowLength={linkDirectionalArrowLength}
+					linkCurvature={linkCurveRotation}
+					linkWidth={getLinkWidth}
+					minZoom={0.65}
+					onNodeClick={node =>
+						handleNodeInteraction({
+							node,
+							activeNodeId,
+							setActiveNodeId,
+							clickTimeout,
+							setClickTimeout,
+							navigate,
+							setParentData,
+							setOpen,
+						})
+					}
+					nodeLabel={getLabel}
+				/>
+			</Suspense>
+		</div>
 	);
 };

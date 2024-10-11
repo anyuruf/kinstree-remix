@@ -102,5 +102,5 @@ export async function createParent({ source, target }: any) {
 			source,
 			target,
 		})
-		.returning({ insertedId: parents.source });
+		.returning({ parentId: parents.source });
 }
