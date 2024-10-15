@@ -5,6 +5,7 @@ import FormInput from '../ui/form-input';
 import { ValidatedForm } from 'remix-validated-form';
 import { createParentValidator } from '@/lib/validators';
 import { Card, CardFooter } from '../ui/card';
+import FormShell from '../members/form-shell';
 
 interface CreateParentProps {
 	open: boolean;
@@ -24,12 +25,15 @@ export function CreateParent({
 
 	return (
 		<Modal open={open} onOpenChange={setOpen}>
-			<Modal.Content title="Create parent link" open={open}>
-				<Card>
+			<Modal.Content open={open}>
+				<FormShell
+					title="Create Parent"
+					description="The form fields below and click the Create member button below to create a new family member"
+				>
 					<ValidatedForm
 						validator={createParentValidator}
 						method="post"
-						action={`./${source}`}
+						action="parent"
 						//creates space between the action buttons
 						className="space-y-4"
 						id="create-parent-form"
@@ -50,7 +54,7 @@ export function CreateParent({
 							value={target}
 							readOnly
 						/>
-						<CardFooter className="flex justify-between">
+						<FormShell.Footer className="flex justify-between">
 							<Button type="submit" size="lg">
 								Create parent
 							</Button>
@@ -59,9 +63,9 @@ export function CreateParent({
 									Cancel
 								</Button>
 							</Modal.Close>
-						</CardFooter>
+						</FormShell.Footer>
 					</ValidatedForm>
-				</Card>
+				</FormShell>
 			</Modal.Content>
 		</Modal>
 	);

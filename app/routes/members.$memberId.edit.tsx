@@ -21,13 +21,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error, data.submittedData);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-	const editedMemberId = await editMember({
+	const [insertedId] = await editMember({
 		birthDate: birthDate ? new Date(birthDate) : null,
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,
 	});
 
-	return redirect(`/members/${editedMemberId[0].insertedId}`);
+	return redirect(`/members/${insertedId}`);
 };
 
 export default function EditMember() {
