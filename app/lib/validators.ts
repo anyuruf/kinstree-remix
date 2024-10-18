@@ -1,4 +1,4 @@
-import { withZod } from '@remix-validated-form/with-zod';
+import { withZod } from '@rvf/zod';
 import { z } from 'zod';
 
 const genderEnum = ['male', 'female'] as const;

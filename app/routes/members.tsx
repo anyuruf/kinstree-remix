@@ -1,26 +1,27 @@
 import type { ActionFunctionArgs } from '@remix-run/node';
 import { Header } from '@/components/header';
-import { Outlet, redirect, useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import {
 	createParent,
+	getMember,
 	getMembers,
 	getParents,
 } from '@/db.server/members.server';
 import { PeopleGraph } from '@/components/members/member-graph';
 import { GraphData } from '@/types';
 import { createParentValidator } from '@/lib/validators';
-import { validationError } from 'remix-validated-form';
+import { validationError } from '@rvf/remix';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-	let data = await createParentValidator.validate(await request.formData());
+	const data = await createParentValidator.validate(await request.formData());
 	if (data.error) return validationError(data.error);
-
-	const createdParent = await createParent({
-		...data.data,
-	});
-
-	return redirect(`/members/${createdParent}`);
+	const [{ parentId }] = await createParent(data.data);
+	const member = await getMember(parentId);
+	if (!member) {
+		throw new Response('Not Found', { status: 404 });
+	}
+	return { member };
 };
 
 export async function loader() {

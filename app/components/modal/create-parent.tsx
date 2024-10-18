@@ -2,10 +2,10 @@ import Modal from './modal';
 import { Button } from '../ui/button';
 import { Dispatch } from 'react';
 import FormInput from '../ui/form-input';
-import { ValidatedForm } from 'remix-validated-form';
 import { createParentValidator } from '@/lib/validators';
-import { Card, CardFooter } from '../ui/card';
 import FormShell from '../members/form-shell';
+import { Form, useFetcher } from '@remix-run/react';
+import { useForm } from '@rvf/remix';
 
 interface CreateParentProps {
 	open: boolean;
@@ -23,6 +23,19 @@ export function CreateParent({
 	// The open and setOpen variables from the modal
 	// Required for frame-motion to function
 
+	const fetcher = useFetcher();
+
+	const form = useForm({
+		// Validation schema
+		validator: createParentValidator,
+		id: 'create-parent',
+	});
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		//e.preventDefault()
+		fetcher.submit(e.currentTarget, { method: 'POST' });
+	};
+
 	return (
 		<Modal open={open} onOpenChange={setOpen}>
 			<Modal.Content open={open}>
@@ -30,17 +43,17 @@ export function CreateParent({
 					title="Create Parent"
 					description="The form fields below and click the Create member button below to create a new family member"
 				>
-					<ValidatedForm
-						validator={createParentValidator}
-						method="post"
-						action="parent"
+					<form
 						//creates space between the action buttons
 						className="space-y-4"
-						id="create-parent-form"
 						// Added role for testing and accessibilty purposes
 						role="form"
+						{...form.getFormProps()}
+						action={'/members/' + source}
+						onSubmit={handleSubmit}
 					>
 						<FormInput
+							fieldError={form.error('source')}
 							type="text"
 							name="source"
 							label="Parent"
@@ -48,6 +61,7 @@ export function CreateParent({
 							readOnly
 						/>
 						<FormInput
+							fieldError={form.error('target')}
 							type="text"
 							name="target"
 							label="Child"
@@ -64,7 +78,7 @@ export function CreateParent({
 								</Button>
 							</Modal.Close>
 						</FormShell.Footer>
-					</ValidatedForm>
+					</form>
 				</FormShell>
 			</Modal.Content>
 		</Modal>

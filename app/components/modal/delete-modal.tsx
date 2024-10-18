@@ -21,7 +21,7 @@ export function DeleteModal() {
 					information from the servers?
 				</p>
 				<div className="flex items-center gap-4 md:gap-0 sm:flex-row-reverse justify-around pt-6">
-					<Form method="post">
+					<Form method="post" action="./destroy">
 						<Button
 							variant="destructive"
 							size="lg"

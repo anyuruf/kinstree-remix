@@ -71,7 +71,7 @@ export function Member() {
 				</table>
 			</CardContent>
 			<CardFooter className="flex justify-around">
-				<Form method="post" action="destroy">
+				<Form action="edit">
 					<Button size="lg">Edit</Button>
 				</Form>
 				<DeleteModal />

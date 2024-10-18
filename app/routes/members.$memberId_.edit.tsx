@@ -1,6 +1,6 @@
 import { editMember, getMember } from '@/db.server/members.server';
 import { redirect } from '@remix-run/react';
-import { validationError } from 'remix-validated-form';
+import { validationError } from '@rvf/remix';
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { MemberEdit } from '@/components/members/member-edit';
@@ -21,7 +21,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	if (data.error) return validationError(data.error, data.submittedData);
 
 	const { deathDate, birthDate, ...rest } = data.data;
-	const [insertedId] = await editMember({
+	const [{ insertedId }] = await editMember({
 		birthDate: birthDate ? new Date(birthDate) : null,
 		deathDate: deathDate ? new Date(deathDate) : null,
 		...rest,

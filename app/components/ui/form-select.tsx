@@ -6,21 +6,24 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Label } from './label';
-import { useField } from 'remix-validated-form';
+import { FormScope, useField, ValueOfInputType } from '@rvf/remix';
+import { useId } from 'react';
 
 type FormSelectInput = {
 	name: string;
 	label: string;
 	placeholder: string;
 	defaultValue?: string | undefined;
+	fieldError?: string | null;
 };
 export default function FormSelect({
 	name,
 	label,
 	placeholder,
+	fieldError,
 	defaultValue,
 }: FormSelectInput) {
-	const { error, getInputProps } = useField(name);
+	const errorId = useId();
 
 	return (
 		<div>
@@ -33,9 +36,9 @@ export default function FormSelect({
 			<div className="mt-2">
 				<Select
 					name={name}
+					aria-describedby={errorId}
+					aria-invalid={!!fieldError}
 					defaultValue={defaultValue}
-					{...getInputProps}
-					required
 				>
 					<SelectTrigger>
 						<SelectValue placeholder={placeholder} />
@@ -45,8 +48,13 @@ export default function FormSelect({
 						<SelectItem value="female">Female</SelectItem>
 					</SelectContent>
 				</Select>
-				{error && (
-					<span className="text-destructive text-xs mt-3">{error}</span>
+				{fieldError && (
+					<span
+						id={errorId}
+						className="text-destructive text-xs font-medium mt-3"
+					>
+						{fieldError}
+					</span>
 				)}
 			</div>
 		</div>

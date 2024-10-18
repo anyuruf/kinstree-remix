@@ -14,8 +14,10 @@ export default function AppIndexPage() {
 				<CardTitle>Steps below</CardTitle>
 				<CardDescription className="flex flex-col gap-2">
 					<section>
-						No member selected yet. Please select or hover over a member on the
-						left if you would like more information <br /> Or <br />
+						<p>
+							No member selected yet. Please select or hover over a member on
+							the left if you would like more information <br /> Or <br />
+						</p>
 					</section>
 					<Link to="create">
 						<Button>Create a new member</Button>
